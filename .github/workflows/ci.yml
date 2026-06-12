@@ -1,0 +1,57 @@
+name: Temporia CI — The Omnissiah Validates
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  terraform-validate:
+    name: Terraform Validate & Format
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: "1.7.0"
+
+      - name: Terraform Format Check
+        run: terraform fmt -check -recursive terraform/
+
+      - name: Terraform Validate (dev)
+        run: |
+          cd terraform/environments/dev
+          cp dev.tfvars.example dev.tfvars
+          # Init with -backend=false so no Azure credentials needed in CI
+          terraform init -backend=false
+          terraform validate
+
+  helm-lint:
+    name: Helm Lint & Template
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: azure/setup-helm@v4
+        with:
+          version: "3.14.0"
+
+      - name: Helm Lint — temporia-stack
+        run: helm lint helm/charts/temporia-stack
+
+      - name: Helm Template — temporia-stack
+        run: helm template temporia-stack helm/charts/temporia-stack
+
+  shellcheck:
+    name: ShellCheck Scripts
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: ShellCheck
+        uses: ludeeus/action-shellcheck@master
+        with:
+          scandir: "./scripts"
+          severity: error

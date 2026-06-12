@@ -1,0 +1,41 @@
+{{- /* Custom RBAC — read-only role scoped to pod/service visibility, no cluster-admin. */ -}}
+{{- if .Values.rbac.createReadOnlyRole -}}
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: {{ .Values.rbac.readOnlyRoleName }}
+  labels:
+    project: temporia
+    managed-by: helm
+rules:
+  - apiGroups: [""]
+    resources: ["pods", "services", "endpoints", "configmaps", "namespaces"]
+    verbs: ["get", "list", "watch"]
+  - apiGroups: ["apps"]
+    resources: ["deployments", "replicasets", "daemonsets", "statefulsets"]
+    verbs: ["get", "list", "watch"]
+  - apiGroups: ["networking.k8s.io"]
+    resources: ["networkpolicies", "ingresses"]
+    verbs: ["get", "list", "watch"]
+{{- $workloadNamespaces := list .Values.namespaces.defensive .Values.namespaces.offensive .Values.namespaces.logging .Values.namespaces.ai }}
+{{- range $ns := $workloadNamespaces }}
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: temporia-read-only-binding
+  namespace: {{ $ns }}
+  labels:
+    project: temporia
+    managed-by: helm
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: {{ $.Values.rbac.readOnlyRoleName }}
+subjects:
+  - kind: Group
+    name: temporia-viewers
+    apiGroup: rbac.authorization.k8s.io
+{{- end }}
+{{- end }}

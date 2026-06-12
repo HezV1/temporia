@@ -1,0 +1,29 @@
+{{- /* Resource quotas — prevent any single namespace from consuming the forge. */ -}}
+---
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: skitarii-quota
+  namespace: {{ .Values.namespaces.defensive }}
+  labels:
+    project: temporia
+spec:
+  hard:
+    requests.cpu: {{ .Values.resourceQuotas.skitarii.requestsCpu | quote }}
+    requests.memory: {{ .Values.resourceQuotas.skitarii.requestsMemory | quote }}
+    limits.cpu: {{ .Values.resourceQuotas.skitarii.limitsCpu | quote }}
+    limits.memory: {{ .Values.resourceQuotas.skitarii.limitsMemory | quote }}
+---
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: myrmidon-quota
+  namespace: {{ .Values.namespaces.offensive }}
+  labels:
+    project: temporia
+spec:
+  hard:
+    requests.cpu: {{ .Values.resourceQuotas.myrmidon.requestsCpu | quote }}
+    requests.memory: {{ .Values.resourceQuotas.myrmidon.requestsMemory | quote }}
+    limits.cpu: {{ .Values.resourceQuotas.myrmidon.limitsCpu | quote }}
+    limits.memory: {{ .Values.resourceQuotas.myrmidon.limitsMemory | quote }}

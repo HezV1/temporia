@@ -1,0 +1,14 @@
+.terraform/
+*.tfstate
+*.tfstate.backup
+*.tfvars
+!*.tfvars.example
+.terraform.lock.hcl
+*.tfplan
+.env
+*.log
+node_modules/
+dashboard/.cache/
+.DS_Store
+__pycache__/
+*.pyc

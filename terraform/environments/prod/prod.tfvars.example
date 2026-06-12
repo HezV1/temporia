@@ -1,0 +1,11 @@
+# Copy to prod.tfvars and fill in your values
+# NEVER commit prod.tfvars to git
+#
+# In prod, allowed_cidr MUST be a specific operator/VPN range — never 0.0.0.0/0.
+
+location     = "eastus"
+environment  = "prod"
+owner        = "YOUR_NAME"
+allowed_cidr = "YOUR_OFFICE_OR_VPN_CIDR" # e.g. 203.0.113.0/24 — never 0.0.0.0/0
+node_count   = 2
+node_vm_size = "Standard_D2s_v5"

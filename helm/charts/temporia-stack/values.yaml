@@ -1,0 +1,48 @@
+# ==============================================================================
+# Temporia Stack — Helm values
+# Every key below is consumed by a template in templates/. Change behavior here,
+# not in the templates.
+# ==============================================================================
+
+# Cluster configuration
+cluster:
+  name: magos-cluster
+  region: eastus
+
+# 40k namespace names. These are the canonical names every template references.
+namespaces:
+  system: omnissiah-system    # core infrastructure
+  defensive: skitarii         # defense and detection (blue)
+  offensive: myrmidon         # offensive research (red)
+  logging: lexmechanic        # logging and intelligence
+  ai: cogitator               # AI and analysis
+
+# Network policy defaults
+networkPolicy:
+  defaultDeny: true           # deny all ingress + egress by default
+  allowDnsEgress: true        # then allow DNS so pods can resolve names
+
+# Resource quotas (per namespace). Only the namespaces listed here get a quota.
+resourceQuotas:
+  skitarii:
+    requestsCpu: "2"
+    requestsMemory: "4Gi"
+    limitsCpu: "4"
+    limitsMemory: "8Gi"
+  myrmidon:
+    requestsCpu: "1"
+    requestsMemory: "2Gi"
+    limitsCpu: "2"
+    limitsMemory: "4Gi"
+
+# RBAC
+rbac:
+  createReadOnlyRole: true
+  readOnlyRoleName: temporia-read-only
+
+# Global labels applied to every object the chart creates.
+global:
+  labels:
+    project: temporia
+    managedBy: helm
+    lore: dark-mechanicum

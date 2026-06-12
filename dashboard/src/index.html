@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TEMPORIA — Dark Mechanicum Security Lab</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <div class="header-inner">
+      <div class="logo-block">
+        <span class="cog">⚙</span>
+        <div>
+          <h1>TEMPORIA</h1>
+          <p class="subtitle">Dark Mechanicum Security Research Lab</p>
+        </div>
+      </div>
+      <div id="lab-status" class="status-badge status-unknown">
+        <span class="status-dot"></span>
+        <span class="status-label">CHECKING…</span>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- Status Panel -->
+    <section class="panel">
+      <h2>Forge Status</h2>
+      <div class="stat-grid">
+        <div class="stat">
+          <div class="stat-label">Cluster</div>
+          <div class="stat-value" id="cluster-name">magos-cluster</div>
+        </div>
+        <div class="stat">
+          <div class="stat-label">Namespaces</div>
+          <div class="stat-value">5</div>
+        </div>
+        <div class="stat">
+          <div class="stat-label">Last Active</div>
+          <div class="stat-value" id="last-active">—</div>
+        </div>
+        <div class="stat">
+          <div class="stat-label">Recent Alerts</div>
+          <div class="stat-value" id="alert-count">—</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Architecture -->
+    <section class="panel">
+      <h2>Architecture</h2>
+      <pre class="arch-diagram">
+  ┌─────────────────────────────────────────────────────────┐
+  │                    Azure (temporia-rg)                   │
+  │                                                          │
+  │  ┌──────────────────── temporia-vnet ──────────────────┐ │
+  │  │                                                      │ │
+  │  │  [magos-cluster-subnet 10.0.1.0/24]                 │ │
+  │  │   ┌────────────────────────────────────────────┐    │ │
+  │  │   │  AKS: magos-cluster                         │    │ │
+  │  │   │  ├── omnissiah-system  (cert-manager, nginx)│    │ │
+  │  │   │  ├── skitarii          (Wazuh SIEM, Falco)  │    │ │
+  │  │   │  ├── myrmidon          (attack tools)        │    │ │
+  │  │   │  ├── lexmechanic       (logging)             │    │ │
+  │  │   │  └── cogitator         (AI analysis)         │    │ │
+  │  │   └────────────────────────────────────────────┘    │ │
+  │  │                                                      │ │
+  │  │  NSG: omnissiah-gate (deny-all → allow 443, 6443)   │ │
+  │  └──────────────────────────────────────────────────────┘ │
+  │                                                          │
+  │  ACR: temperiaforge   Key Vault: temporia-sanctum       │
+  │  Log Analytics: temporia-archive                        │
+  │  Static Web App: noosphere-dashboard (this page)        │
+  └─────────────────────────────────────────────────────────┘
+              ↕ kubectl / Terraform / Helm
+  ┌─────────────────────────────────────────────────────────┐
+  │         Local Dev (Mac M3 Ultra — 128 GB RAM)           │
+  │  k3d: temporia-dev cluster  │  Kali tools  │  OrbStack  │
+  └─────────────────────────────────────────────────────────┘
+      </pre>
+    </section>
+
+    <!-- Namespace taxonomy -->
+    <section class="panel">
+      <h2>Namespace Taxonomy</h2>
+      <table>
+        <thead>
+          <tr><th>Namespace</th><th>40k Lore</th><th>Purpose</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>omnissiah-system</td><td>The Tech-Priesthood — servants of the Machine God</td><td>Core infrastructure: cert-manager, ingress</td></tr>
+          <tr><td>skitarii</td><td>Warrior-Cyborgs of the Mechanicum</td><td>Defense: Wazuh SIEM, Falco runtime security</td></tr>
+          <tr><td>myrmidon</td><td>Heavy Combat Units — offensive specialists</td><td>Attack: PoC runners, target containers</td></tr>
+          <tr><td>lexmechanic</td><td>Data-Archivists — keepers of the Archivum</td><td>Logging and threat intelligence</td></tr>
+          <tr><td>cogitator</td><td>The Machine Spirit — analytical consciousness</td><td>AI-assisted analysis</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- Tech Stack -->
+    <section class="panel">
+      <h2>Tech Stack</h2>
+      <div class="tech-grid">
+        <div class="tech-item"><span class="tech-icon">☸</span><span>Kubernetes (AKS)</span></div>
+        <div class="tech-item"><span class="tech-icon">⛵</span><span>Helm</span></div>
+        <div class="tech-item"><span class="tech-icon">🏗</span><span>Terraform</span></div>
+        <div class="tech-item"><span class="tech-icon">☁</span><span>Azure</span></div>
+        <div class="tech-item"><span class="tech-icon">🛡</span><span>Wazuh SIEM</span></div>
+        <div class="tech-item"><span class="tech-icon">⚔</span><span>Purple Team</span></div>
+      </div>
+    </section>
+
+    <!-- Links -->
+    <section class="panel links-panel">
+      <a href="https://github.com/YOURUSER/temporia" target="_blank" class="btn">View on GitHub</a>
+      <a href="https://github.com/YOURUSER/temporia/tree/main/docs/research" target="_blank" class="btn btn-secondary">Research Write-ups</a>
+    </section>
+  </main>
+
+  <footer>
+    <p>Sanctioned by the Omnissiah &nbsp;·&nbsp; Built with Terraform + Helm + Azure &nbsp;·&nbsp; All resources managed as code</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,54 @@
+{{- /*
+  Temporia namespace definitions — Dark Mechanicum taxonomy.
+  Each namespace maps to a branch of the Tech-Priesthood hierarchy.
+*/ -}}
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: {{ .Values.namespaces.system }}
+  labels:
+    app.kubernetes.io/managed-by: helm
+    project: temporia
+    lore: tech-priesthood
+    purpose: core-infrastructure
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: {{ .Values.namespaces.defensive }}
+  labels:
+    app.kubernetes.io/managed-by: helm
+    project: temporia
+    lore: warrior-cyborgs
+    purpose: defense-and-detection
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: {{ .Values.namespaces.offensive }}
+  labels:
+    app.kubernetes.io/managed-by: helm
+    project: temporia
+    lore: heavy-combat-units
+    purpose: offensive-research
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: {{ .Values.namespaces.logging }}
+  labels:
+    app.kubernetes.io/managed-by: helm
+    project: temporia
+    lore: data-archivists
+    purpose: logging-and-intelligence
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: {{ .Values.namespaces.ai }}
+  labels:
+    app.kubernetes.io/managed-by: helm
+    project: temporia
+    lore: machine-spirit
+    purpose: ai-and-analysis

@@ -1,0 +1,9 @@
+# Copy to dev.tfvars and fill in your values
+# NEVER commit dev.tfvars to git
+
+location     = "eastus"
+environment  = "dev"
+owner        = "YOUR_NAME"
+allowed_cidr = "YOUR_IP/32" # curl ifconfig.me to find your IP
+node_count   = 1
+node_vm_size = "Standard_B2s"
